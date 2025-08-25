@@ -17,6 +17,7 @@ class CalcApplicationTests {
 
     @Test
     void whenNegativeNumber() {
+        
         var input = new TwoArgs(-1, -1);
         var expected = new Result(-2);
         var output = new CalcController().summarise(input);
