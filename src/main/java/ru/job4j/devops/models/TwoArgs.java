@@ -2,12 +2,19 @@ package ru.job4j.devops.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
+/**
+ * Base class for request
+ */
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 public class TwoArgs {
     private double first;
     private double second;
+
+    /**
+     * Constructor
+     */
+    public TwoArgs() {
+    }
 }
