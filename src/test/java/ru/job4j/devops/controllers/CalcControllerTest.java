@@ -62,4 +62,13 @@ class CalcControllerTest {
         assertThat(output.getStatusCode()).isEqualTo(HttpStatusCode.valueOf(200));
         assertThat(output.getBody()).isEqualTo(expected);
     }
+
+    @Test
+    void whenTimesAnyNegatives() {
+        var input = new TwoArgs(-3, 1);
+        var expected = new Result(-3);
+        var output = new CalcController().times(input);
+        assertThat(output.getStatusCode()).isEqualTo(HttpStatusCode.valueOf(200));
+        assertThat(output.getBody()).isEqualTo(expected);
+    }
 }
