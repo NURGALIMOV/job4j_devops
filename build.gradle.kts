@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.spring.boot)
     alias(libs.plugins.spring.dependency.management)
     alias(libs.plugins.spotbugs)
+    id("org.liquibase.gradle") version "3.0.1"
 }
 
 group = "ru.job4j.devops"
@@ -47,6 +48,11 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     testImplementation(libs.junit.jupiter)
     testImplementation(libs.assertj.core)
+    liquibaseRuntime("org.liquibase:liquibase-core:4.30.0")
+    liquibaseRuntime("org.postgresql:postgresql:42.7.4")
+    liquibaseRuntime("javax.xml.bind:jaxb-api:2.3.1")
+    liquibaseRuntime("ch.qos.logback:logback-classic:1.5.15")
+    liquibaseRuntime("info.picocli:picocli:4.6.1")
 }
 
 tasks.withType<Test> {
@@ -117,4 +123,27 @@ tasks.register<Zip>("archiveResources") {
     doLast {
         println("Resources archived successfully at ${outputDir.get().asFile.absolutePath}")
     }
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.liquibase:liquibase-core:4.30.0")
+    }
+}
+
+liquibase {
+    activities.register("main") {
+        arguments = mapOf(
+            "logLevel" to "info",
+            "url" to "jdbc:postgresql://localhost:5432/job4j_devops",
+            "username" to "postgres",
+            "password" to "password",
+            "classpath" to "src/main/resources",
+            "changelogFile" to "db/changelog/db.changelog-master.xml"
+        )
+    }
+    runList = "main"
 }
