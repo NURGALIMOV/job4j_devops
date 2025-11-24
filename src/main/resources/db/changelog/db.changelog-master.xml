@@ -9,4 +9,6 @@
     <include file="changeset/002_ddl_alter_table_user.sql" author="Ilshat Nurgalimov" relativeToChangelogFile="true"/>
     <include file="changeset/003_ddl_alter_add_user_create_date.sql" author="Ilshat Nurgalimov" relativeToChangelogFile="true"/>
     <include file="changeset/004_ddl_alter_add_user_update_date.sql" author="Ilshat Nurgalimov" relativeToChangelogFile="true"/>
+    <include file="changeset/005_ddl_create_calc_events_table.sql" author="Ilshat Nurgalimov" relativeToChangelogFile="true"/>
+    <include file="changeset/006_ddl_alter_user_table_add_name.sql" author="Ilshat Nurgalimov" relativeToChangelogFile="true"/>
 </databaseChangeLog>
