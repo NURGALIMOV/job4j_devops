@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
-import ru.job4j.devops.models.User;
+import ru.job4j.devops.models.dao.User;
 import ru.job4j.devops.repository.UserRepository;
 
 @Component

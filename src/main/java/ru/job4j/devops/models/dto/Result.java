@@ -1,4 +1,4 @@
-package ru.job4j.devops.models;
+package ru.job4j.devops.models.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

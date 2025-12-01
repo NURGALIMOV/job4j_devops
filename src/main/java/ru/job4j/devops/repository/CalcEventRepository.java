@@ -1,7 +1,7 @@
 package ru.job4j.devops.repository;
 
 import org.springframework.data.repository.CrudRepository;
-import ru.job4j.devops.models.CalcEvent;
+import ru.job4j.devops.models.dao.CalcEvent;
 
 import java.util.Optional;
 

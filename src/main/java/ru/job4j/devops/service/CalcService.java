@@ -2,8 +2,8 @@ package ru.job4j.devops.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.job4j.devops.models.CalcEvent;
-import ru.job4j.devops.models.User;
+import ru.job4j.devops.models.dao.CalcEvent;
+import ru.job4j.devops.models.dao.User;
 import ru.job4j.devops.repository.CalcEventRepository;
 
 import java.time.LocalDateTime;

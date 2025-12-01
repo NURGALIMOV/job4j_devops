@@ -1,4 +1,4 @@
-package ru.job4j.devops.models;
+package ru.job4j.devops.models.dao;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

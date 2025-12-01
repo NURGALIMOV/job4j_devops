@@ -4,8 +4,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import ru.job4j.devops.config.ContainersConfig;
-import ru.job4j.devops.models.CalcEvent;
-import ru.job4j.devops.models.User;
+import ru.job4j.devops.models.dao.CalcEvent;
+import ru.job4j.devops.models.dao.User;
 import ru.job4j.devops.repository.CalcEventRepository;
 import ru.job4j.devops.repository.UserRepository;
 
