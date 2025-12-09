@@ -5,6 +5,8 @@ plugins {
     alias(libs.plugins.spring.boot)
     alias(libs.plugins.spring.dependency.management)
     alias(libs.plugins.spotbugs)
+    id("org.liquibase.gradle") version "3.0.1"
+    id("co.uzzu.dotenv.gradle") version "4.0.0"
 }
 
 group = "ru.job4j.devops"
@@ -40,10 +42,18 @@ dependencies {
     compileOnly(libs.lombok)
     annotationProcessor(libs.lombok)
     implementation(libs.spring.boot.starter.web)
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.liquibase:liquibase-core:4.30.0")
+    implementation("org.postgresql:postgresql:42.7.4")
     testImplementation(libs.spring.boot.starter.test)
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     testImplementation(libs.junit.jupiter)
     testImplementation(libs.assertj.core)
+    liquibaseRuntime("org.liquibase:liquibase-core:4.30.0")
+    liquibaseRuntime("org.postgresql:postgresql:42.7.4")
+    liquibaseRuntime("javax.xml.bind:jaxb-api:2.3.1")
+    liquibaseRuntime("ch.qos.logback:logback-classic:1.5.15")
+    liquibaseRuntime("info.picocli:picocli:4.6.1")
 }
 
 tasks.withType<Test> {
@@ -114,4 +124,41 @@ tasks.register<Zip>("archiveResources") {
     doLast {
         println("Resources archived successfully at ${outputDir.get().asFile.absolutePath}")
     }
+}
+
+tasks.register("profile") {
+    doFirst {
+        println(env.DB_URL.value)
+    }
+}
+
+tasks.named<Test>("test") {
+    systemProperty("spring.datasource.url", env.DB_URL.value)
+    systemProperty("spring.datasource.username", env.DB_USERNAME.value)
+    systemProperty("spring.datasource.password", env.DB_PASSWORD.value)
+}
+
+
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.liquibase:liquibase-core:4.30.0")
+    }
+}
+
+liquibase {
+    activities.register("main") {
+        arguments = mapOf(
+            "logLevel" to "info",
+            "url" to env.DB_URL.value,
+            "username" to env.DB_USERNAME.value,
+            "password" to env.DB_PASSWORD.value,
+            "classpath" to "src/main/resources",
+            "changelogFile" to "db/changelog/db.changelog-master.xml"
+        )
+    }
+    runList = "main"
 }
