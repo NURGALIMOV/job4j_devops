@@ -49,6 +49,7 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     testImplementation(libs.junit.jupiter)
     testImplementation(libs.assertj.core)
+    testImplementation("org.testcontainers:postgresql:1.20.4")
     liquibaseRuntime("org.liquibase:liquibase-core:4.30.0")
     liquibaseRuntime("org.postgresql:postgresql:42.7.4")
     liquibaseRuntime("javax.xml.bind:jaxb-api:2.3.1")
