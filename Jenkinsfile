@@ -36,6 +36,20 @@ pipeline {
                 sh 'docker build -t job4j_devops .'
             }
         }
+        stage('Check Git Tag') {
+            steps {
+                script {
+                    def gitTag = sh(script: 'git describe --tags --exact-match', returnStdout: true).trim()
+                    if (gitTag) {
+                        echo "Tag found: ${gitTag}. Proceeding with Docker build."
+                        sh "docker build -t job4j_devops:${gitTag} ."
+                        sh "docker push job4j_devops:${gitTag}"
+                    } else {
+                        echo "No Git tag found. Skipping Docker build."
+                    }
+                }
+            }
+        }
     }
 
     post {
