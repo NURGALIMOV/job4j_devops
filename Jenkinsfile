@@ -38,10 +38,10 @@ pipeline {
                     if (gitTag) {
                         echo "Tag found: ${gitTag}. Proceeding with Docker build."
                         sh """
-                           docker login $DOCKER_REGISTRY -u "$DOCKER_USER" -p "$DOCKER_PASS"
-                           docker build -t job4j_devops:${gitTag} .
-                           docker push job4j_devops:${gitTag}
-                           docker logout $DOCKER_REGISTRY
+                           /usr/bin/docker login $DOCKER_REGISTRY -u "$DOCKER_USER" -p "$DOCKER_PASS"
+                           /usr/bin/docker build -t job4j_devops:${gitTag} .
+                           /usr/bin/docker push job4j_devops:${gitTag}
+                           /usr/bin/docker logout $DOCKER_REGISTRY
                         """
                     } else {
                         echo "No Git tag found. Skipping Docker build."
