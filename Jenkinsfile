@@ -42,8 +42,12 @@ pipeline {
                     def gitTag = sh(script: 'git describe --tags --exact-match', returnStdout: true).trim()
                     if (gitTag) {
                         echo "Tag found: ${gitTag}. Proceeding with Docker build."
-                        sh "docker build -t job4j_devops:${gitTag} ."
-                        sh "docker push job4j_devops:${gitTag}"
+                        sh """
+                           docker login $DOCKER_REGISTRY -u "$DOCKER_USER" -p "$DOCKER_PASS"
+                           docker build -t job4j_devops:${gitTag} .
+                           docker push job4j_devops:${gitTag}
+                           docker logout $DOCKER_REGISTRY
+                        """
                     } else {
                         echo "No Git tag found. Skipping Docker build."
                     }
