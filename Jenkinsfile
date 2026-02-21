@@ -1,6 +1,8 @@
 pipeline {
     agent { label 'agent-jdk21' }
-
+    options {
+        shell('/bin/bash')
+    }
     tools {
         git 'Default'
     }
@@ -33,7 +35,10 @@ pipeline {
         }
         stage('Docker Build') {
             steps {
-                sh 'docker build -t job4j_devops .'
+                sh """
+                  export PATH=/usr/bin:/bin:$PATH
+                  docker build -t job4j_devops .
+                """
             }
         }
         stage('Check Git Tag') {
