@@ -31,9 +31,20 @@ pipeline {
                 sh './gradlew jacocoTestCoverageVerification'
             }
         }
+        stage('Debug PATH') {
+            steps {
+                sh '''
+                    echo "PATH=$PATH"
+                    which docker || true
+                '''
+            }
+        }
         stage('Docker Build') {
             steps {
-                sh 'docker build -t job4j_devops .'
+                sh """
+                  export PATH=/usr/bin:/bin:$PATH
+                  docker build -t job4j_devops .
+                """
             }
         }
         stage('Check Git Tag') {
@@ -43,6 +54,7 @@ pipeline {
                     if (gitTag) {
                         echo "Tag found: ${gitTag}. Proceeding with Docker build."
                         sh """
+                           export PATH=/usr/bin:/bin:$PATH
                            docker login $DOCKER_REGISTRY -u "$DOCKER_USER" -p "$DOCKER_PASS"
                            docker build -t job4j_devops:${gitTag} .
                            docker push job4j_devops:${gitTag}
